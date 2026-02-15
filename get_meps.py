@@ -42,7 +42,7 @@ def get_meps():
             return pd.DataFrame()
         
         #4. If data found, list to DF
-        logging.warning(f"Data found in the API response for key={DATA_KEY}")
+        logging.info(f"Data found in the API response for key={DATA_KEY}")
         characters_df=pd.DataFrame(characters_list)
 
         #5. Filtering with duckdb
