@@ -27,7 +27,10 @@ Disons ici que l'endpoint est un URL, le format sera `application/ld+json` et la
 
 ### Process
 
-L'application sera orchestrée par un cronjob une fois par jour. Comme elle tournera en arrière plan, nous avons besoin d'un script assez robuste et d'un log pour enquêter rapidement en cas d'erreur.
+L'application sera orchestrée par un cronjob une fois par jour. Comme elle tournera en arrière plan, nous avons besoin d'un script assez robuste pour:
+- minimser les erreurs, 
+- gérer les exceptions,
+- logger pour enquêter rapidement en cas d'erreur.
 
 L'application suit la structure suivante:
 
