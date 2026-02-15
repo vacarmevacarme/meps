@@ -13,7 +13,7 @@ L'application `get_meps.py` permet de requêter une API mise à disposition par 
 
 # Démarche
 
-1. ## Documentation API
+## 1. Documentation API
 
 Il faut d''abord trouver dans la doc de l'API :
 
@@ -23,7 +23,8 @@ Il faut d''abord trouver dans la doc de l'API :
 
 Disons ici que l'endpoint est un URL, le format sera `application/ld+json` et la structure `{meta:...,data:[...])` aura une clé `'data'`qui donne accès à la liste des MEPS.
 
-2. ## Application python
+## 2. Application python
+De manière générale, j'essaie toujours de créer des scripts modulaires, bien compartimentés pour faciliter la relecture et la réutilisation. Pour avoir eu à faire à beaucoup de scripts automatisés, le manque de log et la robustesse est toujours un problème. J'aurais fait un système moins 'overkill' pour un script one-shot.
 
 ### Process
 
@@ -31,6 +32,7 @@ L'application sera orchestrée par un cronjob une fois par jour. Comme elle tour
 - minimser les erreurs, 
 - gérer les exceptions,
 - logger pour enquêter rapidement en cas d'erreur.
+
 
 L'application suit la structure suivante:
 
@@ -48,7 +50,7 @@ L'application suit la structure suivante:
 - Certaines étapes et les erreurs sont loggées avec la librairie `logging` dans un fichier `log.log`.
 - Les erreurs sont gérées grâce au `try/except` pour ne pas bloquer le script. Son point faible reste la clé `'data'` qui permet d'extraire les données et qui est une constante. Si les développeurs changent cette clé, aucune donnée ne pourra être trouvée sans modifier le script. Cependant, l'erreur sera gérée et loggée et aucun CSV ne sera généré.
 
-3. ## Cron job
+## 3. Cron job
 
 Pour un tâche exécutée tous les matins à 8h depuis un environnement virtuel python, où les erreurs sont envoyées vers un fichier texte `cron_debug.txt`:
 

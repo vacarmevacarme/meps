@@ -27,11 +27,11 @@ def get_meps():
     try:
         #1. Starting API request
         logging.info(f"Starting API request: {URL}")  
-        response = requests.get(URL, timeout=10)
+        response = requests.get(URL)
         logging.info(f"response.status_code: {response.status_code}")
 
         #2. Decoding json response
-        meps_js=response.json() #dict
+        meps_js=response.json()
 
         #3. Fetching data list. If not found, returns empty list
         meps_list=meps_js.get(DATA_KEY,[])
