@@ -31,19 +31,19 @@ def get_meps():
         logging.info(f"response.status_code: {response.status_code}")
 
         #2. Decoding json response
-        characters_js=response.json() #dict
+        meps_js=response.json() #dict
 
         #3. Fetching data list. If not found, returns empty list
-        characters_list=characters_js.get(DATA_KEY,[])
+        meps_list=meps_js.get(DATA_KEY,[])
 
         #If empty list, log and return empty DF
-        if not characters_list:
+        if not meps_list:
             logging.warning(f"No data found in the API response for key={DATA_KEY}")
             return pd.DataFrame()
         
         #4. If data found, list to DF
         logging.info(f"Data found in the API response for key={DATA_KEY}")
-        characters_df=pd.DataFrame(characters_list)
+        meps_df=pd.DataFrame(meps_list)
 
         #5. Filtering with duckdb
         df=ddb.query("""
@@ -54,7 +54,7 @@ def get_meps():
                         citizenship.iso3 as citizenship,
                         bday,
                         deathDate
-                    FROM characters_df
+                    FROM meps_df
                      """).to_df()
 
         return df
