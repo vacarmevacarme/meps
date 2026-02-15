@@ -3,16 +3,12 @@ import pandas as pd
 import duckdb
 from datetime import date
 import logging
-from  pathlib import Path
 
 ###CONST
 URL='https://europeanparliament.com/api'
-BASE_DIR = BASE_DIR = Path(__file__).resolve().parent #always launch from parent folder
-DATA_DIR = BASE_DIR / "data"
-DATA_FILENAME=DATA_DIR / f"{date.today()}_meps_administrative_data.csv.csv"
-LOG_FILENAME=DATA_DIR / "log.log"
+DATA_FILENAME =f"data/{date.today()}_my_rick.csv"
+LOG_FILENAME = "data/log.log"
 DATA_KEY = 'data'
-
 
 ###LOGGING
 logging.basicConfig(
