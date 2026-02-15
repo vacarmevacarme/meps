@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import duckdb as ddb
+import duckdb
 from datetime import date
 import logging
 from  pathlib import Path
@@ -46,14 +46,14 @@ def get_meps():
         meps_df=pd.DataFrame(meps_list)
 
         #5. Filtering with duckdb
-        df=ddb.query("""
+        df=duckdb.query("""
                     SELECT 
                         id,
                         givenName,
                         familyName,
                         citizenship.iso3 as citizenship,
                         bday,
-                        deathDate
+                        deathDate 
                     FROM meps_df
                      """).to_df()
 

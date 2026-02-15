@@ -8,7 +8,6 @@ L'application `get_meps.py` permet de requêter une API mise à disposition par 
 - pandas
 - duckdb
 - datetime.date
-- Path
 - logging
 
 # Démarche
