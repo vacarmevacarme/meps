@@ -21,6 +21,7 @@ logging.basicConfig(
 
 
 def get_meps():
+
     concat_df=pd.DataFrame() #Empty DF in which each ID will be appended
 
     #1. Starting API request for each ID
@@ -38,9 +39,10 @@ def get_meps():
 
             #Extracting body. If not found with this key, returns empty list
             meps_list=meps_js.get(DATA_KEY,[])
-            #If empty list, log and request next ID in the ID_LIST
+            #If body not found, log and request next ID in the ID_LIST
             if not meps_list:
-                logging.warning(f"No data found in the API response for key={DATA_KEY}")
+                logging.warning(f"No data found in the \
+                                API response for key={DATA_KEY}")
                 continue
             
             #3. Concatenate data in one DF
@@ -57,13 +59,15 @@ def get_meps():
 
 
 def main():
+
     df=get_meps()
 
     #6. If data found, save as csv file
     if not df.empty:
         df.to_csv(DATA_FILENAME,index=False)
         logging.info(
-            f"CSV file '{DATA_FILENAME}' created successfuly with {len(df)} lines"
+            f"CSV file '{DATA_FILENAME}' created successfuly \
+                                        with {len(df)} lines"
             )
         
     #If no data found, logging error and no csv file

@@ -12,7 +12,7 @@ L'application `get_meps.py` permet de requêter une API mise à disposition par 
 
 ## 1. Documentation API
 
-Il faut d''abord trouver dans la doc de l'API :
+Il faut d'abord trouver dans la doc de l'API :
 - le protocole de l'API: REST est le plus commun mais il en existe d'autre comme graphQL
 - *l'endpoint* où envoyer la demande: pour une API REST, ce sera un URL,
 - les types de paramètres compatibles pour filtrer les données dès la requête à l'API,
@@ -42,11 +42,11 @@ L'application sera orchestrée par un cron job une fois par jour. Comme elle tou
 
 L'application suit la structure suivante:
 
-1. Pour chaque MEP ID désiré:
+1. Pour chaque MEP ID d'une liste variable:
 
    - Requête à l'API
    - Décodage en json
-   - Extraction uniquement des données du *body* avec la clé `data`
+   - Extraction uniquement du *body* avec la clé `data`
    - Concatenage dans un `pandas.DataFrame`
 
 2. Sauvegarde les données CSV dans le sous-dossier `data/`
