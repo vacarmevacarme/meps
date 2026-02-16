@@ -68,9 +68,9 @@ Pour un tâche exécutée tous les matins à 8h depuis un environnement virtuel 
 
 # Problèmes rencontrés
 
-- Je requêtais d'abord toutes les données à l'API pour les filtrer ensuite chez le client (avec duckdb par exemple). Mais le serveur peut déjà faire une grande partie du travail, ce qui prend beaucoup moins de temps pour recevoir les infos si ce sont de gros volumes de données. Certaines API ne supportent pas le filtrage avec `?fields=...`, il faudra alors filtrer côté client avec `pandas` ou des librairies `pySQL`
+- Je requêtais d'abord toutes les données à l'API pour les filtrer ensuite côté client (avec duckdb par exemple). Mais le serveur peut déjà faire une grande partie du travail, ce qui prend beaucoup moins de temps pour recevoir les infos si ce sont de gros volumes de données. Certaines API ne supportent pas le filtrage avec `?fields=...`, il faudra alors filtrer côté client avec `pandas` ou des librairies `pySQL`
 - Il y a plusieurs protocoles pour les API. Je me suis exercé sur des API REST car visiblement, elles sont les plus communes. Mais je comprends qu'il y en a d'autres et il faudra que je puisse m'adapter à toutes.
-- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées à la liste des données que l'on cherche. Je trouve que cela fragilise un peu le script de la conserver en tant que constante, mais je ne sais pas si c'est un problème courant de voir la clé changer côté serveur.
+- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées à la liste des données que l'on cherche. Je trouve que cela fragilise un peu le script de conserver la clé en tant que constante, mais je ne sais pas si c'est un problème courant de la voir changer côté serveur.
 
 # Pour aller plus loin
 

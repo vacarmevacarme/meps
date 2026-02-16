@@ -30,7 +30,7 @@ def get_meps():
             new_url=URL+str(ID_LIST[i])+FIELDS #unique url for each id
             logging.info(f"Starting API request: {new_url}") 
             response = requests.get(new_url)
-            response.raise_for_status() #returns explicit http error
+            response.raise_for_status() #returns explicit http error if any
 
             #2. Decoding json response
             mep_js=response.json()
