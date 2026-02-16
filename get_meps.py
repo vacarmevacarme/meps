@@ -21,7 +21,7 @@ logging.basicConfig(
 #Returns a DataFrame of administriative info for each ID in ID_LIST
 def get_meps():
     #Empty list in which each request will be appended + transformed into DF
-    mep_list=[] 
+    mep_list=[]
 
     #Starting API request for each ID
     for i in range(len(ID_LIST)):

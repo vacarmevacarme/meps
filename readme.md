@@ -54,7 +54,6 @@ L'application suit la structure suivante:
 ### Logging et robustesse
 
 - Certaines étapes et les erreurs sont loggées avec la librairie `logging` dans un fichier `log.log`. 
-
 - Les erreurs sont gérées grâce au `try/except` pour ne pas bloquer le script.
 
 
@@ -79,7 +78,6 @@ Pour un tâche exécutée tous les jours à minuit, depuis un environnement virt
 # Pour aller plus loin
 
 - Une API étant rarement ouverte, il faudra ajouter des données d'authentification dans un *header* lors de la commande `requests.get()`.
-
 - On peut s'assurer que le CSV est sauvegardé au bon endroit avec la librairie `path`, peu importe sur quelle machine nous sommes.
 
 # Commentaire
