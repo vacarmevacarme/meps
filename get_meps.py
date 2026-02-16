@@ -1,14 +1,16 @@
 import requests
 import pandas as pd
-import duckdb
 from datetime import date
 import logging
 
 ###CONST
-URL='https://europeanparliament.com/api'
-DATA_FILENAME =f"data/{date.today()}_my_rick.csv"
-LOG_FILENAME = "data/log.log"
-DATA_KEY = 'data'
+URL='https://europeanparliament.com/api/meps/'
+DATA_DIR='data/'
+DATA_FILENAME =DATA_DIR/f"{date.today()}_meps_administrative_data.csv"
+LOG_FILENAME = DATA_DIR/"log.log"
+DATA_KEY = 'data' #key to extract json response body
+ID_LIST=[124936, 968] #list of IDs to request
+FIELDS="?fields=id,givenName,familyName,citizenship.iso3,bday,deathDate"
 
 ###LOGGING
 logging.basicConfig(
@@ -19,52 +21,45 @@ logging.basicConfig(
 
 
 def get_meps():
-    #Exceptions mgmt
-    try:
-        #1. Starting API request
-        logging.info(f"Starting API request: {URL}")  
-        response = requests.get(URL)
-        logging.info(f"response.status_code: {response.status_code}")
+    concat_df=pd.DataFrame() #Empty DF in which each ID will be appended
 
-        #2. Decoding json response
-        meps_js=response.json()
+    #1. Starting API request for each ID
+    try: #Exception mgmt
+        for i in len(ID_LIST):
+            #New url to request
+            new_url=URL+str(ID_LIST[i])+FIELDS
+            #API request 
+            logging.info(f"Starting API request: {new_url}") 
+            response = requests.get(new_url)
+            response.raise_for_status() #returns explicit http error
 
-        #3. Fetching data list. If not found, returns empty list
-        meps_list=meps_js.get(DATA_KEY,[])
+            #Decoding json response
+            meps_js=response.json()
 
-        #If empty list, log and return empty DF
-        if not meps_list:
-            logging.warning(f"No data found in the API response for key={DATA_KEY}")
-            return pd.DataFrame()
-        
-        #4. If data found, list to DF
-        logging.info(f"Data found in the API response for key={DATA_KEY}")
-        meps_df=pd.DataFrame(meps_list)
+            #Extracting body. If not found with this key, returns empty list
+            meps_list=meps_js.get(DATA_KEY,[])
+            #If empty list, log and request next ID in the ID_LIST
+            if not meps_list:
+                logging.warning(f"No data found in the API response for key={DATA_KEY}")
+                continue
+            
+            #3. Concatenate data in one DF
+            logging.info(f"Data found in the API response for key={DATA_KEY}")
+            meps_body=pd.DataFrame(meps_list) #list to DF
+            concat_df=pd.concat([concat_df,meps_body])
 
-        #5. Filtering with duckdb
-        df=duckdb.query("""
-                    SELECT 
-                        id,
-                        givenName,
-                        familyName,
-                        citizenship.iso3 as citizenship,
-                        bday,
-                        deathDate 
-                    FROM meps_df
-                     """).to_df()
-
-        return df
+        return concat_df
     
-    #If error raised, log error and return empty DF
+    #If error raised, log error, ID for which it occured and return DF as it is
     except Exception as e:
-        logging.error(e)
-        return pd.DataFrame()
+        logging.error(f"ERROR:{e}\nAT ID {ID_LIST[i]}")
+        return concat_df
 
 
 def main():
     df=get_meps()
 
-    #If data found, save as csv file
+    #6. If data found, save as csv file
     if not df.empty:
         df.to_csv(DATA_FILENAME,index=False)
         logging.info(
