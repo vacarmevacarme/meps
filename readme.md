@@ -74,11 +74,12 @@ Pour un tâche exécutée tous les jours à minuit, depuis un environnement virt
 
 - Il y a plusieurs protocoles pour les API. Je me suis exercé sur des API REST car visiblement, elles sont les plus communes. Mais je comprends qu'il y en a d'autres et il faudra que je puisse m'adapter à toutes.
 
-- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées au corps des données. Je trouve que cela fragilise un peu le script de conserver la clé en tant que constante, mais je ne sais pas si c'est un problème courant de la voir changer côté serveur. Si oui, on pourra gérer cette erreur spécifiquement.
+- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées au corps des données. Je ne trouve pas robuste de conserver la clé en tant que constante, mais je ne sais pas si c'est un problème courant de la voir changer côté serveur. Si oui, on pourra gérer cette erreur spécifiquement.
 
 # Pour aller plus loin
 
 - Une API étant rarement ouverte, il faudra ajouter des données d'authentification dans un *header* lors de la commande `requests.get()`.
+
 - On peut s'assurer que le CSV est sauvegardé au bon endroit avec la librairie `path`, peu importe sur quelle machine nous sommes.
 
 # Commentaire
