@@ -47,7 +47,7 @@ L'application suit la structure suivante:
    - Requête à l'API
    - Décodage en json
    - Extraction uniquement du *body* avec la clé `data`
-   - Concatenage dans un `pandas.DataFrame`
+   - Concatenage dans une une liste puis transformation en `pandas.DataFrame`
 
 2. Sauvegarde les données CSV dans le sous-dossier `data/`
 
@@ -55,7 +55,7 @@ L'application suit la structure suivante:
 
 - Certaines étapes et les erreurs sont loggées avec la librairie `logging` dans un fichier `log.log`. 
 
-- Les erreurs sont gérées grâce au `try/except` pour ne pas bloquer le script. Je trouve que son point faible reste la clé `'data'` qui permet d'extraire les données et qui est une constante. Si les développeurs changent cette clé côté serveur, aucune donnée ne pourra être trouvée sans modifier le script. C'est pourquoi cette erreur est spécifiquement prise en compte.
+- Les erreurs sont gérées grâce au `try/except` pour ne pas bloquer le script.
 
 
 ## 3. Cron job
@@ -70,7 +70,7 @@ Pour un tâche exécutée tous les matins à 8h depuis un environnement virtuel 
 
 - Je requêtais d'abord toutes les données à l'API pour les filtrer ensuite chez le client (avec duckdb par exemple). Mais le serveur peut déjà faire une grande partie du travail, ce qui prend beaucoup moins de temps pour recevoir les infos si ce sont de gros volumes de données. Certaines API ne supportent pas le filtrage avec `?fields=...`, il faudra alors filtrer côté client avec `pandas` ou des librairies `pySQL`
 - Il y a plusieurs protocoles pour les API. Je me suis exercé sur des API REST car visiblement, elles sont les plus communes. Mais je comprends qu'il y en a d'autres et il faudra que je puisse m'adapter à toutes.
-- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées à la liste des données que l'on cherche. Je trouve que cela fragilise un peu le script, mais je ne sais pas si c'est un problème courant de voir la clé changer côté serveur.
+- Les APIs ne renvoient pas toutes le même schéma de données dans leur réponse et pas les mêmes clés ('data','results','items'...) associées à la liste des données que l'on cherche. Je trouve que cela fragilise un peu le script de la conserver en tant que constante, mais je ne sais pas si c'est un problème courant de voir la clé changer côté serveur.
 
 # Pour aller plus loin
 
@@ -80,4 +80,4 @@ Pour un tâche exécutée tous les matins à 8h depuis un environnement virtuel 
 # Commentaire
 
 Ce genre de projet m'amuse beaucoup donc j'ai pris le temps d'en faire un peu plus avec la gestion des erreurs et le logging.
-Pour avoir eu affaire à beaucoup de scripts automatisés (notamment en plateforme de test), les manques de lisibilité, de log et de robustesse sont souvent un problème. Donc de manière générale, j'essaie toujours de créer des scripts modulaires, bien compartimentés pour faciliter la relecture, la réutilisation et la maintenance. Mais si le mot d'ordre est la simplicité, je peux aussi respecter cela.
+Pour avoir eu affaire à beaucoup de scripts automatisés (notamment en plateforme de test), les manques de lisibilité, de log et de robustesse sont souvent un problème. Donc de manière générale, j'essaie toujours de créer des scripts modulaires, bien compartimentés pour faciliter la relecture, la réutilisation et la maintenance. Mais si le mot d'ordre est la simplicité, j'irai plus droit au but évidemment.
