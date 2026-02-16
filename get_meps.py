@@ -18,9 +18,9 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
     )
 
-
+#Returns a DataFrame of administriative info for each ID in ID_LIST
 def get_meps():
-    #Empty list in which each ID will be appended then to DF once
+    #Empty list in which each request will be appended + transformed into DF
     mep_list=[] 
 
     #Starting API request for each ID
@@ -35,9 +35,9 @@ def get_meps():
             #2. Decoding json response
             mep_js=response.json()
 
-            #3. Extracting body. If not found with this key, returns empty list
-            mep_data=mep_js.get(DATA_KEY,[]) #list of one dict [{}]
-            # Appending data to a list (one dict per ID)
+            #3. Extracting body
+            mep_data=mep_js[DATA_KEY] #list of one dict [{}]
+            # Appending data to a list
             logging.info(f"Data found in the API response for key={DATA_KEY}")
             mep_list.append(mep_data[0]) #extracting unique dict in this list {}
 
@@ -52,6 +52,7 @@ def get_meps():
     return df
 
 
+# Saves in a CSV file
 def main():
 
     df=get_meps()
