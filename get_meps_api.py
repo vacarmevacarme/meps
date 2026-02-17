@@ -27,10 +27,10 @@ def get_meps(id_list):
     mep_list=[]
 
     #Starting API request for each ID
-    for i in range(len(id_list)):
+    for mep_id in id_list:
         try: #Exception mgmt
             #(i) API request 
-            new_url=URL+str(ID_LIST[i]) #unique url for each id
+            new_url=f"{URL}{mep_id}" #unique url for each id
             logging.info(f"Starting API request: {new_url}") 
             response = requests.get(new_url,headers=HEADERS)
             response.raise_for_status() #returns explicit http error if any
