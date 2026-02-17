@@ -23,7 +23,7 @@ Il faut d'abord trouver dans la doc de l'API :
 Disons ici que:
 - nous avons affaire à une API REST ouverte, 
 - l'*endpoint* est un URL : https://europeanparliament.com/api/meps,
-- le paramètre pour filtrer les ID est `meps/{mep_id}` et est un entier, et l'API supporte le paramètre `fields` pour uniquement sélectionner les champs désirés, ici: *id, givenName, familyName, citizenship.iso3, bday, deathDate* (où iso3 est une propriété de citizenship)
+- le paramètre pour filtrer les ID est un entier `meps/{mep_id}`, et l'API supporte le paramètre `fields` pour uniquement sélectionner les champs désirés, ici: *id, givenName, familyName, citizenship.iso3, bday, deathDate* (où iso3 est une propriété de citizenship)
 
 > Exemple d'URL à requêter: https://europeanparliament.com/api/meps/10?fields=id,givenName,familyName,citizenship.iso3,bday,deathDate,
 
@@ -56,7 +56,6 @@ L'application suit la structure suivante:
 - Certaines étapes et les erreurs sont loggées avec la librairie `logging` dans un fichier `log.log`. 
 - Les erreurs sont gérées grâce au `try/except` pour ne pas bloquer le script.
 
-
 ## 3. Cron job
 
 Pour un tâche exécutée tous les jours à minuit, depuis un environnement virtuel python, où les erreurs sont envoyées vers un fichier texte `cron_debug.txt`:
@@ -83,4 +82,4 @@ Pour un tâche exécutée tous les jours à minuit, depuis un environnement virt
 # Commentaire
 
 Ce genre de projet m'amuse beaucoup donc j'ai pris le temps d'en faire un peu plus avec la gestion des erreurs et le logging.
-Pour avoir eu affaire à beaucoup de scripts automatisés (notamment en plateforme de test), les manques de lisibilité, de log et de robustesse sont souvent un problème. Donc de manière générale, j'essaie toujours de créer des scripts modulaires, bien compartimentés pour faciliter la relecture, la réutilisation et la maintenance. Mais si le mot d'ordre est la simplicité, j'irai plus droit au but évidemment.
+Pour avoir eu affaire à beaucoup de scripts automatisés (notamment en plateforme de test), les manques de lisibilité, de log et de robustesse sont souvent un problème. Donc de manière générale, j'essaie de créer des scripts modulaires, bien compartimentés pour faciliter la relecture, la réutilisation et la maintenance. Mais si le mot d'ordre est la simplicité, j'irai plus droit au but évidemment.
