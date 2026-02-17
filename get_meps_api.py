@@ -40,7 +40,7 @@ def get_meps(id_list):
             mep_js=response.json()
             # Extracting body
             mep_data=mep_js[DATA_KEY][0] #list of one dict [{}] then one dict
-            # Selecting only this keys
+            # Selecting only this keys (only last 3 char for citizenship iso3)
             selection = {
                 'id': mep_data.get('id'),
                 'givenName': mep_data.get('givenName'),
