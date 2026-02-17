@@ -23,7 +23,7 @@ def get_meps(id_list):
     #Empty list in which each request will be appended + transformed into DF
     mep_list=[]
 
-    #Starting API request for each ID
+    #1. Starting API request for each ID
     for i in range(len(id_list)):
         try: #Exception mgmt
             #1. API request 
@@ -46,7 +46,7 @@ def get_meps(id_list):
             logging.error(f"ERROR:{e}\n")
             continue
         
-    # 5.Transforming everything to DF ONCE
+    # 2.Transforming everything to DF ONCE
     df=pd.DataFrame(mep_list)
 
     return df
@@ -57,7 +57,7 @@ def main():
 
     df=get_meps(ID_LIST)
 
-    #6. If data found, save as csv file
+    #3. If data found, save as csv file
     if not df.empty:
         df.to_csv(DATA_FILENAME,index=False)
         logging.info(
