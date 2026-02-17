@@ -14,8 +14,6 @@ HEADERS={"Accept": "application/ld+json",
          }
 
 
-FIELDS="?fields=id"
-
 ###LOGGING
 logging.basicConfig(
     filename=LOG_FILENAME,
@@ -25,24 +23,24 @@ logging.basicConfig(
 
 #Returns a DataFrame of administriative info for each ID in ID_LIST
 def get_meps(id_list):
-    #Empty list in which each request will be appended + transformed into DF
+    #Empty list in which each request will be appended
     mep_list=[]
 
-    #1. Starting API request for each ID
+    #Starting API request for each ID
     for i in range(len(id_list)):
         try: #Exception mgmt
-            #1. API request 
-            new_url=URL+str(ID_LIST[i])+FIELDS #unique url for each id
+            #(i) API request 
+            new_url=URL+str(ID_LIST[i]) #unique url for each id
             logging.info(f"Starting API request: {new_url}") 
             response = requests.get(new_url,headers=HEADERS)
             response.raise_for_status() #returns explicit http error if any
 
-            #2. Decoding json response
+            #(ii) Getting only necessary data
+            # Decoding json response
             mep_js=response.json()
-
-            #3. Extracting body
+            # Extracting body
             mep_data=mep_js[DATA_KEY][0] #list of one dict [{}] then one dict
-            #4. Selects only this data
+            # Selecting only this keys
             selection = {
                 'id': mep_data.get('id'),
                 'givenName': mep_data.get('givenName'),
@@ -51,25 +49,27 @@ def get_meps(id_list):
                 'bday': mep_data.get('bday'),
                 'deathDate': mep_data.get('deathDate')
             }
-            # Appending data to a list
+            
+            # (iii) Appending data to a list then DF
             logging.info(f"Data found in the API response")
-            mep_list.append(selection) #extracting unique dict in this list {}
+            mep_list.append(selection)
 
         #If error, log error and continue to next ID
         except Exception as e:
             logging.error(f"ERROR:{e}\n")
             continue
         
-    # 2.Transforming everything to DF ONCE
+    # Transforming everything to DF ONCE
     df=pd.DataFrame(mep_list)
+    return df
 
 
-# Saves in a CSV file
+# (iv) Saves in a CSV file
 def main():
 
     df=get_meps(ID_LIST)
 
-    #3. If data found, save as csv file
+    #If data found, save as csv file
     if not df.empty:
         df.to_csv(DATA_FILENAME,index=False)
         logging.info(

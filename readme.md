@@ -47,6 +47,7 @@ L'application suit la structure suivante:
    - Requête à l'API
    - Décodage en json
    - Extraction uniquement du *body* avec la clé `data`
+   - Selection d'uniquement les champs (id, givenName...)
    - Concatenage dans une une liste puis transformation en `pandas.DataFrame`
 
 2. Sauvegarde les données CSV dans le sous-dossier `data/`
