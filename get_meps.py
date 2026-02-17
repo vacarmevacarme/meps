@@ -19,12 +19,12 @@ logging.basicConfig(
     )
 
 #Returns a DataFrame of administriative info for each ID in ID_LIST
-def get_meps():
+def get_meps(id_list):
     #Empty list in which each request will be appended + transformed into DF
     mep_list=[]
 
     #Starting API request for each ID
-    for i in range(len(ID_LIST)):
+    for i in range(len(id_list)):
         try: #Exception mgmt
             #1. API request 
             new_url=URL+str(ID_LIST[i])+FIELDS #unique url for each id
@@ -38,7 +38,7 @@ def get_meps():
             #3. Extracting body
             mep_data=mep_js[DATA_KEY] #list of one dict [{}]
             # Appending data to a list
-            logging.info(f"Data found in the API response for key={DATA_KEY}")
+            logging.info(f"Data found in the API response")
             mep_list.append(mep_data[0]) #extracting unique dict in this list {}
 
         #If error, log error and continue to next ID
@@ -55,7 +55,7 @@ def get_meps():
 # Saves in a CSV file
 def main():
 
-    df=get_meps()
+    df=get_meps(ID_LIST)
 
     #6. If data found, save as csv file
     if not df.empty:
