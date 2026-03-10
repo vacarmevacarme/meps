@@ -26,7 +26,7 @@ Ici:
 - il est demandé d'utiliser un {user-id} d'authentification lors de la requête (requests.get(url,user-id))
 - l'*endpoint* est un URL, il permet de requeter les infos d'un MEP avec son ID : https://data.europarl.europa.eu/api/v2/,
 - grâce au suffixe `meps/{mep_id}`, nous pouvons reqêter les données d'un MEP en particiculier
-- les types des *queries* disponible ne contiennent pas nottament de le paramètre `?fields=...` qui permettrait de ne requeter que les champ qui nous interressent (*id, givenName, familyName...). Il faudra dont trier les champs côté lcient après avoir tout recu
+- les types des *queries* disponible ne contiennent pas nottament de le paramètre `?fields=...` qui permettrait de ne requeter que les champ qui nous interressent (*id, givenName, familyName...). Il faudra dont trier les champs côté client après avoir tout recu
 
 > Exemple d'URL à requêter: https://europeanparliament.com/api/meps/10
 
