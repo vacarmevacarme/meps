@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from datetime import date
+from datetime import date, datetime
 import logging
 
 ###CONST
@@ -27,6 +27,8 @@ def get_meps(id_list):
     mep_list=[]
 
     #Starting API request for each ID
+    s=requests.session()
+    s.headers.update(HEADERS)
     for mep_id in id_list:
         try: #Exception mgmt
             #(i) API request 
@@ -60,13 +62,14 @@ def get_meps(id_list):
             continue
         
     # Transforming everything to DF ONCE
-    df=pd.DataFrame(mep_list)
+    #pd.df uses keys as columns names and fills df with values VERY COMMON
+    df=pd.DataFrame(mep_list) 
     return df
 
 
 # (iv) Saves in a CSV file
 def main():
-
+    
     df=get_meps(ID_LIST)
 
     #If data found, save as csv file
